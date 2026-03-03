@@ -20,10 +20,13 @@ jobs:
         cache: maven
 
     - name: 3. Ejecutar Tests y Generar JAR
-      run: mvn -B package --file vib_ED_pt2/pom.xml
+      # Esta linea le dice a Maven que entre en tu carpeta antes de trabajar
+      run: mvn -B package --file pom.xml
+      working-directory: vib_ED_pt2
 
     - name: 4. Subir JAR (Artefacto)
       uses: actions/upload-artifact@v3
       with:
           name: vib_ED_tests-jar
+          # Ajustamos la ruta para que encuentre el JAR dentro de la carpeta
           path: vib_ED_pt2/target/*.jar

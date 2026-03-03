@@ -20,12 +20,15 @@ jobs:
         cache: maven
 
     - name: 3. Ejecutar Tests y Generar JAR
-      # Hemos añadido el doble camino para llegar al pom.xml
-      run: mvn -B package --file pom.xml
-      working-directory: vib_ED_pt2/vib_ED_pt2
+      # Buscamos el pom.xml donde quiera que este
+      run: |
+        POM_PATH=$(find . -name "pom.xml" | head -n 1)
+        DIR_PATH=$(dirname $POM_PATH)
+        mvn -B package --file $POM_PATH
+        echo "JAR_DIR=$DIR_PATH/target" >> $GITHUB_ENV
 
     - name: 4. Subir JAR (Artefacto)
       uses: actions/upload-artifact@v3
       with:
           name: vib_ED_tests-jar
-          path: vib_ED_pt2/vib_ED_pt2/target/*.jar
+          path: "**/*.jar"

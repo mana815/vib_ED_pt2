@@ -20,13 +20,12 @@ jobs:
         cache: maven
 
     - name: 3. Ejecutar Tests y Generar JAR
-      # Indicamos que el pom.xml esta dentro de la carpeta vib_ED_pt2
+      # Hemos añadido el doble camino para llegar al pom.xml
       run: mvn -B package --file pom.xml
-      working-directory: vib_ED_pt2
+      working-directory: vib_ED_pt2/vib_ED_pt2
 
     - name: 4. Subir JAR (Artefacto)
       uses: actions/upload-artifact@v3
       with:
           name: vib_ED_tests-jar
-          # Buscamos el binario dentro de la carpeta correcta
-          path: vib_ED_pt2/target/*.jar
+          path: vib_ED_pt2/vib_ED_pt2/target/*.jar
